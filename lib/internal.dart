@@ -19,48 +19,48 @@
  *
  */
 
-package edu.ufl.cise.btf.tdouble;
+part of edu.ufl.cise.btf;
 
-public class Dbtf_internal extends Dbtf {
+//public class Dbtf_internal extends Dbtf {
 
-	/**
-	 * Enable debugging and assertions.
-	 */
-	public static boolean NDEBUG = true ;
+/**
+ * Enable debugging and assertions.
+ */
+bool NDEBUG = true ;
 
-	protected static void ASSERT (boolean a)
+void ASSERT (bool a)
+{
+	if (!NDEBUG)
 	{
-		if (!NDEBUG)
-		{
-			assert a ;
-		}
+		assert(a) ;
 	}
-
-	protected static void ASSERT (int a)
-	{
-		ASSERT (a != 0) ;
-	}
-
-	/**
-	 * Enable diagnostic printing.
-	 */
-	public static boolean NPRINT = true ;
-
-	protected static void PRINTF (String format, Object... args)
-	{
-		if (!NPRINT)
-		{
-			System.out.printf (format, args) ;
-		}
-	}
-
-	protected static final int TRUE = 1 ;
-	protected static final int FALSE = 0 ;
-	protected static final int EMPTY = (-1) ;
-
-	protected static int MIN (int a, int b)
-	{
-		return (((a) < (b)) ?  (a) : (b)) ;
-	}
-
 }
+
+void ASSERT_INT (int a)
+{
+	ASSERT (a != 0) ;
+}
+
+/**
+ * Enable diagnostic printing.
+ */
+bool NPRINT = true ;
+
+void PRINTF (String format)//, Object... args)
+{
+	if (!NPRINT)
+	{
+		print (format);//, args) ;
+	}
+}
+
+const int TRUE = 1 ;
+const int FALSE = 0 ;
+const int EMPTY = (-1) ;
+
+int MIN (int a, int b)
+{
+	return (((a) < (b)) ?  (a) : (b)) ;
+}
+
+//}

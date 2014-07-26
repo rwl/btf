@@ -18,82 +18,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  *
  */
+import 'package:unittest/unittest.dart';
+import 'package:btf/btf.dart';
 
-package edu.ufl.cise.btf.tdouble.test;
+main() {
 
-import static edu.ufl.cise.btf.tdouble.Dbtf_order.btf_order;
-import static edu.ufl.cise.btf.tdouble.Dbtf_strongcomp.btf_strongcomp;
-import static edu.ufl.cise.btf.tdouble.Dbtf_maxtrans.btf_maxtrans;
+	group('btf', () {
 
-import junit.framework.TestCase;
+		final n = 479 ;
 
-public class Dbtf_demo extends TestCase {
-
-	int n;
-	int [] Ai, Ap;
-
-	public void test_btf() {
-		int maxwork, nblocks ;
-		int [] Q, P, R ;
-		double [] work = new double[1] ;
-		int [] nmatch = new int[1] ;
-
-		/* get output arrays */
-		P = new int [n] ;
-		Q = new int [n] ;
-		R = new int [n+1] ;
-
-		maxwork = -1 ;
-		work[0] = 0 ;
-
-		/* find the permutation to BTF */
-		nblocks = btf_order (n, Ap, Ai, maxwork, work, P, Q, R, nmatch) ;
-
-		assertEquals(166, nblocks);
-		assertEquals(2116.0, work[0]);
-		assertEquals(479, nmatch[0]);
-	}
-
-	public void test_strongcomp() {
-
-		int nblocks ;
-		int [] Q, P, R ;
-
-		/* get output arrays */
-		P = new int [n] ;
-		Q = new int [n] ;
-		R = new int [n + 1] ;
-
-		/* find the strongly-connected components of A */
-		nblocks = btf_strongcomp (n, Ap, Ai, Q, P, R) ;
-
-		assertEquals (477, nblocks) ;
-	}
-
-	public void test_maxtrans() {
-
-		int maxwork, nmatch ;
-		int [] Match ;
-		double [] work = new double [1] ;
-
-		/* get output array */
-		Match = new int [n] ;
-
-		maxwork = -1 ;
-		work[0] = 0 ;
-
-		/* perform the maximum transversal */
-		nmatch = btf_maxtrans (n, n, Ap, Ai, maxwork, work, Match) ;
-
-		assertEquals(2116.0, work[0]);
-		assertEquals(479, nmatch);
-	}
-
-	protected void setUp() throws Exception {
-
-		n = 479 ;
-
-		Ap = new int[] {
+		final Ap = [
 		    0,    3,    6,    9,   11,   13,   18,   23,   26,   29,   32,
 		   36,   39,   42,   45,   47,   49,   54,   57,   60,   63,   66,
 		   69,   72,   75,   77,   79,   81,   83,   85,   87,   89,   91,
@@ -137,9 +71,9 @@ public class Dbtf_demo extends TestCase {
 		 1795, 1798, 1801, 1804, 1807, 1809, 1811, 1813, 1815, 1817, 1819,
 		 1821, 1823, 1825, 1829, 1835, 1837, 1839, 1842, 1846, 1849, 1852,
 		 1854, 1856, 1858, 1860, 1862, 1864, 1866, 1868, 1870, 1872, 1874,
-		 1876, 1878, 1880, 1882, 1884, 1886, 1888 } ;
+		 1876, 1878, 1880, 1882, 1884, 1886, 1888 ] ;
 
-		Ai = new int[] {
+		final Ai = [
     		24, 30, 86, 25, 30, 87, 26, 30, 88, 27, 28, 28, 29, 29, 30, 86, 87,
     		88, 31, 42, 110, 111, 112, 32, 42, 110, 33, 42, 111, 34, 42, 112,
     		35, 36, 37, 38, 36, 42, 110, 37, 42, 111, 38, 42, 112, 39, 41, 40,
@@ -271,9 +205,61 @@ public class Dbtf_demo extends TestCase {
     		456, 456, 457, 465, 457, 459, 475, 476, 458, 465, 477, 459, 465, 477,
     		265, 268, 266, 269, 267, 270, 287, 290, 288, 291, 289, 292, 309, 312,
     		310, 313, 311, 314, 331, 334, 332, 335, 333, 336, 353, 356, 354, 357,
-    		355, 358, 375, 378, 376, 379, 377, 380 } ;
+    		355, 358, 375, 378, 376, 379, 377, 380 ] ;
 
-		super.setUp();
-	}
+    test('order', () {
+      List<int> Q, P, R ;
+      final work = new List<double>(1) ;
+      final nmatch = new List<int>(1) ;
 
+      /* get output arrays */
+      P = new List<int>(n) ;
+      Q = new List<int>(n) ;
+      R = new List<int>(n + 1) ;
+
+      final maxwork = -1.0 ;
+      work[0] = 0.0 ;
+
+      /* find the permutation to BTF */
+      final nblocks = order (n, Ap, Ai, maxwork, work, P, Q, R, nmatch) ;
+
+      expect(166, equals(nblocks));
+      expect(2116.0, equals(work[0]));
+      expect(479, equals(nmatch[0]));
+    });
+
+    test('strongcomp', () {
+
+      int nblocks ;
+      List<int> Q, P, R ;
+
+      /* get output arrays */
+      P = new List<int>(n) ;
+      Q = new List<int>.filled(n, 0) ;
+      R = new List<int>(n + 1) ;
+
+      /* find the strongly-connected components of A */
+      nblocks = strongcomp (n, Ap, Ai, Q, P, R) ;
+
+      expect(477, equals(nblocks)) ;
+    });
+
+    test('maxtrans', () {
+
+      List<int> Match ;
+      final work = new List<double>(1) ;
+
+      /* get output array */
+      Match = new List<int>(n) ;
+
+      final maxwork = -1.0 ;
+      work[0] = 0.0 ;
+
+      /* perform the maximum transversal */
+      final nmatch = maxtrans (n, n, Ap, Ai, maxwork, work, Match) ;
+
+      expect(2116.0, equals(work[0]));
+      expect(479, equals(nmatch));
+    });
+	});
 }
