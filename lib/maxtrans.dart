@@ -156,8 +156,8 @@ part of edu.ufl.cise.btf;
  * @param maxwork maximum work allowed
  * @return
  */
-int augment(int k, List<int> Ap, List<int> Ai, List<int> Match,
-		List<int> Cheap, List<int> Flag, List<int> Istack, List<int> Jstack, List<int> Pstack,
+int augment(int k, Int32List Ap, Int32List Ai, Int32List Match,
+		Int32List Cheap, Int32List Flag, Int32List Istack, Int32List Jstack, Int32List Pstack,
 	    List<double> work, double maxwork)
 {
 	/* local variables, but "global" to all DFS levels: */
@@ -383,10 +383,10 @@ int augment(int k, List<int> Ap, List<int> Ai, List<int> Match,
  * @param Match size nrow.  Match [i] = j if column j matched to row i
  * @return # of columns in the matching
  */
-int maxtrans(int nrow, int ncol, List<int> Ap, List<int> Ai,
-	    double maxwork, List<double> work, List<int> Match)
+int maxtrans(int nrow, int ncol, Int32List Ap, Int32List Ai,
+	    double maxwork, List<double> work, Int32List Match)
 {
-	List<int> Cheap, Flag, Istack, Jstack, Pstack ;
+	Int32List Cheap, Flag, Istack, Jstack, Pstack ;
 	int i, j, k, nmatch, work_limit_reached, result ;
 
 	/* ------------------------------------------------------------------ */
@@ -394,13 +394,13 @@ int maxtrans(int nrow, int ncol, List<int> Ap, List<int> Ai,
 	/* ------------------------------------------------------------------ */
 
 	//Cheap  = Work ; Work += ncol ;
-	Cheap = new List<int>(ncol) ;
-	Flag = new List<int>(ncol) ;
+	Cheap = new Int32List(ncol) ;
+	Flag = new Int32List(ncol) ;
 
 	/* stack for non-recursive depth-first search in augment function */
-	Istack = new List<int>(ncol) ;
-	Jstack = new List<int>(ncol) ;
-	Pstack = new List<int>(ncol) ;
+	Istack = new Int32List(ncol) ;
+	Jstack = new Int32List(ncol) ;
+	Pstack = new Int32List(ncol) ;
 
 	/* in column j, rows Ai [Ap [j] .. Cheap [j]-1] are known to be matched */
 	for (j = 0 ; j < ncol ; j++)

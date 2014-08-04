@@ -21,6 +21,8 @@
 
 library edu.ufl.cise.btf;
 
+import 'dart:typed_data';
+
 part 'internal.dart';
 part 'maxtrans.dart';
 part 'order.dart';

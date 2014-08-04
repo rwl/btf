@@ -84,12 +84,12 @@ part of edu.ufl.cise.btf;
  * @param nmatch size 1, # nonzeros on diagonal of P*A*Q
  * @return number of blocks found
  */
-int order(int n, List<int> Ap, List<int> Ai,
-		double maxwork, List<double> work, List<int> P, List<int> Q, List<int> R,
-		List<int> nmatch)
+int order(int n, Int32List Ap, Int32List Ai,
+		double maxwork, List<double> work, Int32List P, Int32List Q, Int32List R,
+		Int32List nmatch)
 {
-	List<int> Flag ;
-	List<int> Work ;
+	Int32List Flag ;
+	Int32List Work ;
 	int nblocks, i, j, nbadcol ;
 
 	/* ------------------------------------------------------------------ */
@@ -112,8 +112,8 @@ int order(int n, List<int> Ap, List<int> Ai,
 	if (nmatch[0] < n)
 	{
 		/* get size-n work arrays */
-		Work = new List<int>(n) ;
-		Flag = new List<int>(n) ;
+		Work = new Int32List(n) ;
+		Flag = new Int32List(n) ;
 
 		for (j = 0 ; j < n ; j++)
 		{

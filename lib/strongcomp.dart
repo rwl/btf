@@ -88,9 +88,9 @@ const int UNASSIGNED = (-1) ;
  * @param Jstack size n, stack for the variable j
  * @param Pstack size n, stack for the variable p
  */
-void dfs(int j, final List<int> Ap, final List<int> Ai, final List<int> Q,
-		List<int> Time, List<int> Flag, List<int> Low, List<int> p_nblocks, List<int> p_timestamp,
-		List<int> Cstack, List<int> Jstack, List<int> Pstack)
+void dfs(int j, final Int32List Ap, final Int32List Ai, final Int32List Q,
+		Int32List Time, Int32List Flag, Int32List Low, Int32List p_nblocks, Int32List p_timestamp,
+		Int32List Cstack, Int32List Jstack, Int32List Pstack)
 {
 	/* ------------------------------------------------------------------ */
 	/* local variables, and initializations */
@@ -260,13 +260,13 @@ void dfs(int j, final List<int> Ap, final List<int> Ai, final List<int> Q,
  * of the permuted matrix.
  * @return # of strongly connected components
  */
-int strongcomp(final int n, final List<int> Ap, final List<int> Ai,
-		List<int> Q, List<int> P, List<int> R)
+int strongcomp(final int n, final Int32List Ap, final Int32List Ai,
+		Int32List Q, Int32List P, Int32List R)
 {
 	int j, k, b ;
-	List<int> timestamp = new List<int>(1) ;
-	List<int> nblocks = new List<int>(1) ;
-	List<int> Flag, Cstack, Time, Low, Jstack, Pstack ;
+	Int32List timestamp = new Int32List(1) ;
+	Int32List nblocks = new Int32List(1) ;
+	Int32List Flag, Cstack, Time, Low, Jstack, Pstack ;
 
 	/* ------------------------------------------------------------------ */
 	/* get and initialize workspace */
@@ -295,14 +295,14 @@ int strongcomp(final int n, final List<int> Ap, final List<int> Ai,
 	 * is used for both the recursive and non-recursive versions.
 	 */
 
-	Time   = new List<int>(n) ;
-	Flag   = new List<int>(n) ;
+	Time   = new Int32List(n) ;
+	Flag   = new Int32List(n) ;
 	Low    = P ;                /* use output array P as workspace for Low */
 	Cstack = R ;                /* use output array R as workspace for Cstack */
 
 	/* stack for non-recursive dfs */
-	Jstack = new List<int>(n) ;		/* stack for j */
-	Pstack = new List<int>(n) ;		/* stack for p */
+	Jstack = new Int32List(n) ;		/* stack for j */
+	Pstack = new Int32List(n) ;		/* stack for p */
 
 	for (j = 0 ; j < n ; j++)
 	{
