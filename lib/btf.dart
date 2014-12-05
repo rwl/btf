@@ -1,24 +1,20 @@
-/**
- * BTF, by Timothy A. Davis, Copyright (C) 2004-2011, University of Florida,
- * with support from Sandia National Laboratories.  All Rights Reserved.
- * Copyright (C) 2011 Richard Lincoln
- *
- * BTF is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This Module is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this Module; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
- *
- */
-
+/// BTF, by Timothy A. Davis, Copyright (C) 2004-2011, University of Florida,
+/// with support from Sandia National Laboratories.  All Rights Reserved.
+/// Copyright (C) 2011 Richard Lincoln
+///
+/// BTF is free software; you can redistribute it and/or
+/// modify it under the terms of the GNU Lesser General Public
+/// License as published by the Free Software Foundation; either
+/// version 2.1 of the License, or (at your option) any later version.
+///
+/// This Module is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+/// Lesser General Public License for more details.
+///
+/// You should have received a copy of the GNU Lesser General Public
+/// License along with this Module; if not, write to the Free Software
+/// Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 library edu.ufl.cise.btf;
 
 import 'dart:typed_data';
@@ -28,55 +24,35 @@ part 'maxtrans.dart';
 part 'order.dart';
 part 'strongcomp.dart';
 
-//public class Dbtf {
-
 /* ====================================================================== */
 /* === BTF marking of singular columns ================================== */
 /* ====================================================================== */
 
-/* BTF_FLIP is a "negation about -1", and is used to mark an integer j
- * that is normally non-negative.  BTF_FLIP (-1) is -1.  BTF_FLIP of
- * a number > -1 is negative, and BTF_FLIP of a number < -1 is positive.
- * BTF_FLIP (BTF_FLIP (j)) = j for all integers j.  UNFLIP (j) acts
- * like an "absolute value" operation, and is always >= -1.  You can test
- * whether or not an integer j is "flipped" with the BTF_ISFLIPPED (j)
- * macro.
- */
+/// [flip] is a "negation about -1", and is used to mark an integer j
+/// that is normally non-negative.  [flip(-1)] is -1.  [flip] of
+/// a number > -1 is negative, and [flip] of a number < -1 is positive.
+/// [flip(flip(j)) = j] for all integers j.  [unflip(j)] acts
+/// like an "absolute value" operation, and is always >= -1. You can test
+/// whether or not an integer j is "flipped" with the isFlipped(j)
+/// macro.
+int flip(int j) => -j - 2;
 
-int BTF_FLIP(int j)
-{
-	return (-(j)-2) ;
-}
+bool isFlipped(int j) => j < -1;
 
-bool BTF_ISFLIPPED(int j)
-{
-	return ((j) < -1) ;
-}
-
-int BTF_UNFLIP(int j)
-{
-	return ((BTF_ISFLIPPED (j)) ? BTF_FLIP (j) : (j)) ;
-}
+int unflip(int j) => isFlipped(j) ? flip(j) : j;
 
 /* ====================================================================== */
 /* === BTF version ====================================================== */
 /* ====================================================================== */
 
-/* All versions of BTF include these definitions.
- * As an example, to test if the version you are using is 1.2 or later:
- *
- *      if (BTF_VERSION >= BTF_VERSION_CODE (1,2)) ...
- */
+/// All versions of BTF include these definitions.
+/// As an example, to test if the version you are using is 1.2 or later:
+///
+///      if (VERSION >= versionCode(1, 2)) ...
 
-const String BTF_DATE = "Jan 25, 2011" ;
-int BTF_VERSION_CODE(int main, int sub)
-{
-	return ((main) * 1000 + (sub));
-}
-const int BTF_MAIN_VERSION = 1 ;
-const int BTF_SUB_VERSION = 1 ;
-const int BTF_SUBSUB_VERSION = 2 ;
-final int BTF_VERSION = BTF_VERSION_CODE(BTF_MAIN_VERSION,
-		BTF_SUB_VERSION) ;
-
-//}
+const String DATE = "Jan 25, 2011";
+int versionCode(int main, int sub) => main * 1000 + sub;
+const int MAIN_VERSION = 1;
+const int SUB_VERSION = 1;
+const int SUBSUB_VERSION = 2;
+final int VERSION = versionCode(MAIN_VERSION, SUB_VERSION);

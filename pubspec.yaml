@@ -1,7 +1,7 @@
 name: btf
-version: 0.1.0
+version: 0.2.0
 author: Richard Lincoln <r.w.lincoln@gmail.com>
 description: Permutes an unsymmetric matrix (square or rectangular) into its block upper triangular form.
-homepage: http://www.cise.ufl.edu/research/sparse/btf/
-dependencies:
+homepage: https://github.com/rwl/btf
+dev_dependencies:
   unittest: '>=0.11.0+3 <0.12.0'

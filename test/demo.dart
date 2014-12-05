@@ -21,15 +21,13 @@
 import 'dart:typed_data';
 
 import 'package:unittest/unittest.dart';
-import 'package:btf/btf.dart';
+import 'package:btf/btf.dart' as btf;
 
 main() {
-
   group('btf', () {
+    final n = 479;
 
-    final n = 479 ;
-
-    final Ap = new Int32List.fromList([
+    final Ap = [
         0,    3,    6,    9,   11,   13,   18,   23,   26,   29,   32,
        36,   39,   42,   45,   47,   49,   54,   57,   60,   63,   66,
        69,   72,   75,   77,   79,   81,   83,   85,   87,   89,   91,
@@ -73,9 +71,9 @@ main() {
      1795, 1798, 1801, 1804, 1807, 1809, 1811, 1813, 1815, 1817, 1819,
      1821, 1823, 1825, 1829, 1835, 1837, 1839, 1842, 1846, 1849, 1852,
      1854, 1856, 1858, 1860, 1862, 1864, 1866, 1868, 1870, 1872, 1874,
-     1876, 1878, 1880, 1882, 1884, 1886, 1888 ]) ;
+     1876, 1878, 1880, 1882, 1884, 1886, 1888 ];
 
-    final Ai = new Int32List.fromList([
+    final Ai = [
         24, 30, 86, 25, 30, 87, 26, 30, 88, 27, 28, 28, 29, 29, 30, 86, 87,
         88, 31, 42, 110, 111, 112, 32, 42, 110, 33, 42, 111, 34, 42, 112,
         35, 36, 37, 38, 36, 42, 110, 37, 42, 111, 38, 42, 112, 39, 41, 40,
@@ -196,8 +194,8 @@ main() {
         186, 189, 190, 191, 192, 191, 196, 197, 198, 192, 196, 197, 198, 193,
         196, 194, 197, 195, 198, 196, 199, 197, 200, 198, 201, 202, 205, 208,
         209, 210, 203, 206, 208, 209, 210, 204, 207, 208, 209, 210, 205, 208,
-        206, 209, 207, 210, 208, 211, 209, 212, 210, 213, 89, 460, 466, 90,
-        461, 466, 91, 462, 466, 463, 464, 464, 465, 89, 90, 91, 465, 466, 113,
+        206, 209, 207, 210, 208, 211, 209, 212, 210, 213,  89, 460, 466,  90,
+        461, 466,  91, 462, 466, 463, 464, 464, 465,  89,  90,  91, 465, 466, 113,
         114, 115, 467, 478, 113, 468, 478, 114, 469, 478, 115, 470, 478, 471,
         472, 473, 474, 113, 472, 478, 114, 473, 478, 115, 474, 478, 475, 477,
         476, 477, 113, 114, 115, 477, 478, 437, 443, 446, 438, 444, 447, 439,
@@ -207,23 +205,22 @@ main() {
         456, 456, 457, 465, 457, 459, 475, 476, 458, 465, 477, 459, 465, 477,
         265, 268, 266, 269, 267, 270, 287, 290, 288, 291, 289, 292, 309, 312,
         310, 313, 311, 314, 331, 334, 332, 335, 333, 336, 353, 356, 354, 357,
-        355, 358, 375, 378, 376, 379, 377, 380 ]) ;
+        355, 358, 375, 378, 376, 379, 377, 380 ];
 
     test('order', () {
-      Int32List Q, P, R ;
-      final work = new Float64List(1) ;
-      final nmatch = new Int32List(1) ;
+      final work = new Float64List(1);
+      final nmatch = new Int32List(1);
 
       /* get output arrays */
-      P = new Int32List(n) ;
-      Q = new Int32List(n) ;
-      R = new Int32List(n + 1) ;
+      final P = new Int32List(n);
+      final Q = new Int32List(n);
+      final R = new Int32List(n + 1);
 
-      final maxwork = -1.0 ;
-      work[0] = 0.0 ;
+      final maxwork = -1.0;
+      work[0] = 0.0;
 
       /* find the permutation to BTF */
-      final nblocks = order (n, Ap, Ai, maxwork, work, P, Q, R, nmatch) ;
+      final nblocks = btf.order(n, Ap, Ai, maxwork, work, P, Q, R, nmatch);
 
       expect(166, equals(nblocks));
       expect(2116.0, equals(work[0]));
@@ -231,34 +228,28 @@ main() {
     });
 
     test('strongcomp', () {
-
-      int nblocks ;
-      Int32List Q, P, R ;
-
       /* get output arrays */
-      P = new Int32List(n) ;
-      Q = new Int32List(n) ;
-      R = new Int32List(n + 1) ;
+      final P = new Int32List(n);
+      final Q = new Int32List(n);
+      final R = new Int32List(n + 1);
 
       /* find the strongly-connected components of A */
-      nblocks = strongcomp (n, Ap, Ai, Q, P, R) ;
+      final nblocks = btf.strongcomp(n, Ap, Ai, Q, P, R);
 
-      expect(477, equals(nblocks)) ;
+      expect(477, equals(nblocks));
     });
 
     test('maxtrans', () {
-
-      Int32List Match ;
-      final work = new List<double>(1) ;
+      final work = new List<double>(1);
 
       /* get output array */
-      Match = new Int32List(n) ;
+      final match = new Int32List(n);
 
-      final maxwork = -1.0 ;
-      work[0] = 0.0 ;
+      final maxwork = -1.0;
+      work[0] = 0.0;
 
       /* perform the maximum transversal */
-      final nmatch = maxtrans (n, n, Ap, Ai, maxwork, work, Match) ;
+      final nmatch = btf.maxtrans(n, n, Ap, Ai, maxwork, work, match);
 
       expect(2116.0, equals(work[0]));
       expect(479, equals(nmatch));
